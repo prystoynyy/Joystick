@@ -1,12 +1,14 @@
 #include "Joystick.h"
 
-const int Joystick::xAliasCenterValue = 512;
-const int Joystick::yAliasCenterValue = 512;
+const int Joystick::xAliasCenterValue = 522;
+const int Joystick::yAliasCenterValue = 495;
 
 Joystick::Joystick(int sw_pin, int x_pin,int y_pin){
   this->sw_pin_ = sw_pin;
   this->x_pin_ = x_pin;
   this->y_pin_ = y_pin;
+  pinMode(this->sw_pin_, INPUT);
+  digitalWrite(this->sw_pin_, HIGH);
 }
 
 int Joystick::getAliasPosition(int aliasValue, int aliasCenterValue){

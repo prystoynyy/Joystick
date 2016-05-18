@@ -1,34 +1,28 @@
-#include "../src/SimpleSD.h"
-#include <SimpleSD.h>
-#include <string.h>
+#include "../src/Joystick.h"
+#include <Joystick.h>
 
-/*
- *  Make copy of file
- */
 
-char* FILE_NAME = "data.csv";
-char* COPY_FILE_NAME = "copy-data.csv";
-const int CS_PIN = 4;
+// Arduino pin numbers
+const int SW_pin = 2; // digital pin connected to switch output
+const int X_pin = 0; // analog pin connected to X output
+const int Y_pin = 1; // analog pin connected to Y output
+Joystick* joystick;
 
-void setup()
-{
-        Serial.begin(9600);
-        SimpleSD* simpleSD = new SimpleSD(CS_PIN);
-        if (!simpleSD->Init()) {
-                Serial.println("Initialization failed!");
-                return;
-        }
-        if(simpleSD->IsInit()){
-           bool isSuccessCopy = simpleSD->CopyFile(FILE_NAME, COPY_FILE_NAME)
-           if(isSuccessCopy){
-             Serial.println("Copying is success");
-           }
-           else{
-             Serial.println("Copying is fail");
-           }
-        }
+void setup() {
+  Serial.begin(9600);
+  joystick = new Joystick(SW_pin, X_pin, Y_pin);
 }
 
-void loop()
-{
+void loop() {
+  JoystickState state = joystick->getState();
+  Serial.print("Switch:  ");
+  Serial.print(state.SW);
+  Serial.print("\n");
+  Serial.print("X-axis: ");
+  Serial.print(state.X);
+  Serial.print("\n");
+  Serial.print("Y-axis: ");
+  Serial.println(state.Y);
+  Serial.print("\n\n");
+  delay(500);
 }
